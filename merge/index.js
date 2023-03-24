@@ -5,7 +5,43 @@
 // merge([1,5], [4,6,7]) === [1,4,5,6,7]
 // merge([4,6,7], [1,5]) === [1,4,5,6,7]
 
-function merge(sortedArr1, sortedArr2) {}
+function merge(arr1, arr2) {
+  // const mergedArray = [];
+  // let i = 0;
+  // let j = 0;
+
+  // while (i < arr1.length && j < arr2.length) {
+  //   if (arr1[i] <= arr2[j]) {
+  //     mergedArray.push(arr1[i]);
+  //     i++;
+  //   } else {
+  //     mergedArray.push(arr2[j]);
+  //     j++;
+  //   }
+  // }
+
+  // while (i < arr1.length) {
+  //   mergedArray.push(arr1[i]);
+  //   i++;
+  // }
+
+  // while (j < arr2.length) {
+  //   mergedArray.push(arr2[j]);
+  //   j++;
+  // }
+
+  // return mergedArray;
+
+  const mergedArray = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < arr1.length && j < arr2.length) {
+    mergedArray.push(arr1[i] <= arr2[j] ? arr1[i++] : arr2[j++]);
+  }
+
+  return mergedArray.concat(arr1.slice(i)).concat(arr2.slice(j));
+}
 
 // _________ _______  _______ _________   _______  _______  _______  _______  _______
 // \__   __/(  ____ \(  ____ \\__   __/  (  ____ \(  ___  )(  ____ \(  ____ \(  ____ \
