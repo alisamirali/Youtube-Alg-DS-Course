@@ -72,6 +72,79 @@ class LinkedList {
 
     return last;
   }
+
+  push(data) {
+    if (!this.head) {
+      return this.unshift(data);
+    }
+
+    const last = this.getLast();
+    last.next = new Node(data);
+    this.length++;
+  }
+
+  get(index) {
+    if (index >= this.length || index < 0) {
+      return null;
+    }
+
+    let counter = 0;
+    let current = this.head;
+
+    while (counter < index) {
+      current = current.next;
+      counter++;
+    }
+
+    return current;
+  }
+
+  set(index, data) {
+    if (!this.get(index)) {
+      return false;
+    }
+
+    const node = this.get(index);
+    node.data = data;
+    return true;
+  }
+
+  remove(index) {
+    if (!this.get(index)) {
+      return false;
+    }
+
+    if (index === 0) {
+      return this.shift();
+    }
+
+    const prevNode = this.get(index - 1);
+    const nodeToRemove = this.get(index);
+
+    prevNode.next = prevNode.next.next;
+    this.length--;
+
+    return nodeToRemove;
+  }
+
+  insert(index, data) {
+    if (index > this.length || index < 0) {
+      return false;
+    }
+
+    if (index === 0) {
+      this.unshift(data);
+      return true;
+    }
+
+    const prevNode = this.get(index - 1);
+    const nextNode = this.get(index);
+
+    prevNode.next = new Node(data, nextNode);
+    this.length++;
+
+    return true;
+  }
 }
 
 // _________ _______  _______ _________   _______  _______  _______  _______  _______
@@ -210,7 +283,7 @@ describe("pop()", () => {
   });
 });
 
-describe.skip("push(data)", () => {
+describe("push(data)", () => {
   it("adds to the end of the list and increases length.", () => {
     const l = new LinkedList();
     l.unshift(1);
@@ -227,7 +300,7 @@ describe.skip("push(data)", () => {
   });
 });
 
-describe.skip("get(index)", () => {
+describe("get(index)", () => {
   it("returns null on negative or out of bounds index.", () => {
     const l = new LinkedList();
     l.push("Kevin");
@@ -246,7 +319,7 @@ describe.skip("get(index)", () => {
   });
 });
 
-describe.skip("set(index, data)", () => {
+describe("set(index, data)", () => {
   it("returns falsy value on out of bounds or negative index.", () => {
     const l = new LinkedList();
     l.push(2);
@@ -262,7 +335,7 @@ describe.skip("set(index, data)", () => {
   });
 });
 
-describe.skip("remove(index)", () => {
+describe("remove(index)", () => {
   it("returns falsy value on out of bounds OR negative index.", () => {
     const l = new LinkedList();
     l.push(2);
@@ -295,7 +368,7 @@ describe.skip("remove(index)", () => {
   });
 });
 
-describe.skip("insert(index, data)", () => {
+describe("insert(index, data)", () => {
   it("returns false on index greater than length or negative index.", () => {
     const l = new LinkedList();
     assert.equal(l.insert(1, "meow"), false);
